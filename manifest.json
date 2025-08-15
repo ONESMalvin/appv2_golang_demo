@@ -1,0 +1,56 @@
+{
+    "id": "app_F63GRnbJR6xINLyK",
+    "name": "malvin-test-appv2-golang",
+    "version": "v1.0.0",
+    "desc": "malvin-test-appv2-golang",
+    "base_url": "https://7c73b6eff3a9.ngrok-free.app",
+    "auth": {
+        "type": "jwt"
+    },
+    "lifecycle_callback": {
+        "install": "/install_cb",
+        "enabled": "/enabled_cb",
+        "disabled": "/disabled_cb",
+        "uninstalled": "/uninstalled_cb"
+    },
+    "oauth": {
+        "type": ["app", "user"],
+        "redirect_uri": "https://7c73b6eff3a9.ngrok-free.app/oauth/callback",
+        "scope": ["read:project:issue","write:project:issue"]
+    },
+    "extensions": {
+        "manhourValidator": [
+            {
+                "key": "validator1",
+                "funcs": {
+                    "validate": "/manhour/validate"
+                }
+            }
+        ],
+        "appSettingPages": [
+            {
+                "key":"settingPage",
+                "funcs": {
+                    "customEntries": "/settingPage/entries"
+                }
+            }
+        ]
+    },
+    "events": {
+        "url": "/events/webhook",
+        "types": [
+            {
+                "eventType": "ones:project:issue:created"
+            },
+            {
+                "eventType": "ones:project:issue:updated"
+            },
+            {
+                "eventType": "ones:project:project:created"
+            },
+            {
+                "eventType": "ones:project:project:updated"
+            }
+        ]
+    }
+}

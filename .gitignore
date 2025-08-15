@@ -1,0 +1,5 @@
+.vscode
+web/node_modules
+web/dist
+appv2go
+appv2.db
