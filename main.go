@@ -25,6 +25,7 @@ func main() {
 	r.Use(CORSMiddleware())
 	r.Static("/static", "./web/dist")
 	r.GET("/manifest", handleManifest)
+	r.POST("/install_cb", handleInstallCB)
 	r.GET("/all_installations", handleAllInstallations)
 
 	settingGroup := r.Group("/settingPage")
@@ -32,7 +33,6 @@ func main() {
 
 	r.Use(JWTAuthMiddleware())
 
-	r.POST("/install_cb", handleInstallCB)
 	r.POST("/uninstall_cb", gin.HandlerFunc(func(c *gin.Context) {
 		c.JSON(200, gin.H{"status": "success", "message": "请求成功"})
 	}))
