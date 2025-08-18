@@ -3,7 +3,7 @@
     "name": "malvin-test-appv2-golang",
     "version": "v1.0.0",
     "desc": "malvin-test-appv2-golang",
-    "base_url": "https://7c73b6eff3a9.ngrok-free.app",
+    "base_url": "https://22d0a029c93a.ngrok-free.app",
     "auth": {
         "type": "jwt"
     },
@@ -15,8 +15,15 @@
     },
     "oauth": {
         "type": ["app", "user"],
-        "redirect_uri": "https://7c73b6eff3a9.ngrok-free.app/oauth/callback",
-        "scope": ["read:project:issue","write:project:issue", "read:account:teams"]
+        "redirect_uri": "https://22d0a029c93a.ngrok-free.app/oauth/callback",
+        "scope": [
+            "read:project:issue",
+            "write:project:issue",
+            "read:project:project",
+            "read:account:teams",
+            "read:account:user",
+            "read:account:team:user"
+        ]
     },
     "extensions": {
         "manhourValidator": [
