@@ -1,9 +1,9 @@
 {
-    "id": "app_F63GRnbJR6xINLyK",
+    "id": "app_f63grnbjr6xinlyk",
     "name": "malvin-test-appv2-golang",
     "version": "v1.0.0",
     "desc": "malvin-test-appv2-golang",
-    "base_url": "https://22d0a029c93a.ngrok-free.app",
+    "base_url": "https://p8205-k3s-9.k3s-dev.myones.net/platform/plugin_relay/app_dispatch/app_f63grnbjr6xinlyk",
     "auth": {
         "type": "jwt"
     },
@@ -15,14 +15,13 @@
     },
     "oauth": {
         "type": ["app", "user"],
-        "redirect_uri": "https://22d0a029c93a.ngrok-free.app/oauth/callback",
+        "redirect_uri": "https://p8205-k3s-9.k3s-dev.myones.net/platform/plugin_relay/app_dispatch/app_f63grnbjr6xinlyk/oauth/callback",
         "scope": [
             "read:project:issue",
             "write:project:issue",
             "read:project:project",
             "read:account:teams",
-            "read:account:user",
-            "read:account:team:user"
+            "read:account:user"
         ]
     },
     "extensions": {
