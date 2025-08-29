@@ -89,7 +89,7 @@ const App = () => {
             const projects = data?.data?.list || [];
             projects.forEach(project => {
                 console.log(project);
-                project.createdAt = new Date(project.createTime/1000).toLocaleString("zh-CN", {
+                project.createdAt = new Date(project.createTime).toLocaleString("zh-CN", {
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit',
@@ -108,8 +108,6 @@ const App = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            paddingTop: '10%',
-            paddingBottom: '10%',
             width: '100%',
             height: '100%',
             backgroundColor: '#f5f5f5',
