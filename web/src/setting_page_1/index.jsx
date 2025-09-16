@@ -3,12 +3,12 @@ import { Table } from "@ones-design/table";
 import { ConfigProvider, Select, Button, Spin, Space, Typography, Card } from '@ones-design/core'
 import { useMemoizedFn } from "ahooks";
 import ReactDOM from "react-dom";
+import { ONES } from "@ones-open/sdk";
 
 const { Title, Text } = Typography;
 
 const App = () => {
 
-    const [token, setToken] = useState("");
     const [teams, setTeams] = useState([]);
     const [loading, setLoading] = useState(false);
     const [teamUsers, setTeamUsers] = useState([]);
@@ -16,14 +16,6 @@ const App = () => {
     const [selectedTeam, setSelectedTeam] = useState(null);
 
     useEffect(() => {
-        document.dispatchEvent(new CustomEvent("ones:platform:client:sdk", {
-            detail: {
-                    invoke(SDK) {
-                        window.SDK = SDK;
-                        setToken(SDK.ONES.getAppToken());
-                    }
-                }
-            }));
         fetchTeams();
     }, []);
 
@@ -31,11 +23,7 @@ const App = () => {
     const fetchTeams = useMemoizedFn(async () => {
         setLoading(true);
         try {
-            const res = await SDK.ONES.fetchOpenAPI("/v2/account/teams", {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
+            const res = await ONES.fetchOpenAPI("/v2/account/teams");
             const data = await res.json();
 
             const teams = data?.data?.teams || [];
@@ -65,10 +53,8 @@ const App = () => {
 
     const fetchTeamUsers = useMemoizedFn(async (value) => {
         try {
-            const res = await SDK.ONES.fetchOpenAPI(`/v2/account/users/search?teamID=${value}`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
+            const res = await ONES.fetchOpenAPI(`/v2/account/users/search?teamID=${value}`, {
+                
             });
             const data = await res.json();
             const users = data?.data?.list || [];
@@ -80,11 +66,7 @@ const App = () => {
 
     const fetchProjects = useMemoizedFn(async (value) => {
         try {
-            const res = await SDK.ONES.fetchOpenAPI(`/v2/project/projects?teamID=${value}`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
+            const res = await ONES.fetchOpenAPI(`/v2/project/projects?teamID=${value}`);
             const data = await res.json();
             const projects = data?.data?.list || [];
             projects.forEach(project => {

@@ -11,6 +11,7 @@ module.exports = {
     filename: '[name].js',
     //publicPath: 'http://localhost:8082/static/'
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -42,8 +43,10 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
-    compress: true,
-    port: 8080,
+    port: 8081,
     hot: true,
+    liveReload: true,
+    watchFiles: ['src/**/*'],
+    open: true,
   }
 };

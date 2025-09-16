@@ -10,11 +10,13 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 )
 
 type JWTAssertionClaim struct {
 	Uid string `json:"uid"` // 用户ID
 	Rsh string `json:"rsh"` // 请求hash
+	Jti string `json:"jti"` // 请求ID
 	jwt.RegisteredClaims
 }
 
@@ -28,6 +30,7 @@ func genJWTAssertion(installationInfo InstallCallbackReq, userID string) (string
 			Audience:  jwt.ClaimStrings{"oauth"},
 		},
 		Uid: userID,
+		Jti: uuid.New().String()[:16],
 	})
 	signKey, err := base64.StdEncoding.DecodeString(installationInfo.SharedSecret)
 	if err != nil {
@@ -55,15 +58,16 @@ func getAccessToken(installationInfo InstallCallbackReq, userID string) (string,
 	}
 	httpReq.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	form := url.Values{}
-	/*
-		form.Set("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer")
-		form.Set("assertion", tokenString)
-	*/
-
-	form.Set("grant_type", "client_credentials")
-	form.Set("client_assertion", tokenString)
 	form.Set("client_id", installationInfo.InstallationID)
-	form.Set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
+	form.Set("grant_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
+	form.Set("assertion", tokenString)
+
+	/*
+		form.Set("client_id", installationInfo.InstallationID)
+		form.Set("grant_type", "client_credentials")
+		form.Set("client_assertion", tokenString)
+		form.Set("client_assertion_type", "urn:ietf:params:oauth:client-assertion-type:jwt-bearer")
+	*/
 
 	httpReq.Body = io.NopCloser(strings.NewReader(form.Encode()))
 	response, err := http.DefaultClient.Do(httpReq)

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -12,6 +13,8 @@ var (
 )
 
 func main() {
+	isDev := flag.String("isDev", "false", "是否是开发环境")
+	flag.Parse()
 	// 初始化数据库
 	if err := InitDatabase(); err != nil {
 		log.Fatal("数据库初始化失败:", err)
@@ -23,7 +26,14 @@ func main() {
 
 	r.GET("/", handleManifest)
 	r.Use(CORSMiddleware())
-	r.Static("/static", "./web/dist")
+	if *isDev == "false" {
+		r.Static("/static", "./web/dist")
+	} else {
+		r.GET("/static/*filepath", func(c *gin.Context) {
+			c.Redirect(302, "http://localhost:8081/static"+c.Param("filepath"))
+		})
+	}
+
 	r.GET("/manifest", handleManifest)
 	r.POST("/install_cb", handleInstallCB)
 	r.GET("/all_installations", handleAllInstallations)
@@ -91,6 +101,9 @@ func handleEvents(c *gin.Context) {
 		return
 	}
 
+	log.Printf("Request Header: %v", c.Request.Header)
+	log.Printf("Request Body: %v", requestBody)
+
 	auth := c.Request.Header.Get("Authorization")
 	eventId := c.Request.Header.Get("X-Ones-Event-Id")
 	eventType := c.Request.Header.Get("X-Ones-Event-Type")
@@ -149,7 +162,7 @@ func handleManhourValidate(c *gin.Context) {
 	//log.Printf("manhour请求 %v, header: %v", requestBody, c.Request.Header)
 	c.JSON(200, gin.H{"error": map[string]any{
 		"reason": "不准提交工时！",
-		"level":  "error",
+		"level":  "warning",
 	}})
 }
 
@@ -180,11 +193,20 @@ func handleSettingPageEntries(c *gin.Context) {
 			{
 				Title: func() string {
 					if requestBody.Language == "zh" {
-						return "测试"
+						return "自定义页面1"
 					}
-					return "Test"
+					return "Custom Page 1"
 				}(),
 				PageUrl: "/static/page1.html",
+			},
+			{
+				Title: func() string {
+					if requestBody.Language == "zh" {
+						return "自定义页面2"
+					}
+					return "Custom Page 2"
+				}(),
+				PageUrl: "/static/page2.html",
 			},
 		},
 	}

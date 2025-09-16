@@ -1,8 +1,8 @@
 {
     "id": "app_f63grnbjr6xinlyk",
-    "name": "malvin-test-appv2-golang",
-    "version": "v1.0.0",
-    "desc": "malvin-test-appv2-golang",
+    "name": "Malvin App",
+    "version": "v1.0.1",
+    "desc": "Test app developed by Malvin",
     "base_url": "https://p8205-k3s-9.k3s-dev.myones.net/platform/plugin_relay/app_dispatch/app_f63grnbjr6xinlyk",
     "auth": {
         "type": "jwt"
