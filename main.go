@@ -161,7 +161,7 @@ func handleManhourValidate(c *gin.Context) {
 
 	//log.Printf("manhour请求 %v, header: %v", requestBody, c.Request.Header)
 	c.JSON(200, gin.H{"error": map[string]any{
-		"reason": "不准提交工时！",
+		"reason": "hhh,不准提交工时！",
 		"level":  "warning",
 	}})
 }
