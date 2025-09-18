@@ -2,7 +2,7 @@
     "id": "app_f63grnbjr6xinlyk",
     "name": "Malvin's Demo App",
     "version": "v1.0.2",
-    "desc": "功能描述：\n1. 禁止登记工时! \n2.OpenAPI调用返回信息展示\n3.团队信息展示\n",
+    "desc": "功能描述：\n1.禁止登记工时 \n2.客户端API调用返回信息展示\n3.团队信息展示\n",
     "base_url": "https://p8205-k3s-9.k3s-dev.myones.net/platform/plugin_relay/app_dispatch/app_f63grnbjr6xinlyk",
     "auth": {
         "type": "jwt"
@@ -15,7 +15,6 @@
     },
     "oauth": {
         "type": ["app", "user"],
-        "redirect_uri": "https://p8205-k3s-9.k3s-dev.myones.net/platform/plugin_relay/app_dispatch/app_f63grnbjr6xinlyk/oauth/callback",
         "scope": [
             "read:project:issue",
             "write:project:issue",
