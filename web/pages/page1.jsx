@@ -16,7 +16,6 @@ const fetchOpenAPIIndex = initialCommands.findIndex((text) =>
 );
 
 const formatForToast = (value) => {
-  console.log(value)
   if (value === undefined) return 'undefined';
   if (value === null) return 'null';
   if (typeof value === 'string') return value;
@@ -51,7 +50,6 @@ const serializeResponse = async (response) => {
 };
 
 const normalizeToastValue = async (value) => {
-  console.log(typeof value)
   if (typeof value === 'object') {
     return serializeResponse(value);
   }
@@ -163,14 +161,15 @@ const Page1 = () => {
     showToast(content);
   };
 
-  const handleModalClick = () => {
+  const handleModalClick = async () => {
     const children = modalMessage.trim() || '请输入要展示的内容';
     if (ONES?.UI?.modal) {
-      ONES.UI.modal({
+      const inst = await ONES.UI.modal({
         type: 'info',
         title: '提示',
         children,
-      });
+        onOk: () => { inst.hide(); }
+      })
     } else {
       // eslint-disable-next-line no-console
       console.log('[modal]', children);
