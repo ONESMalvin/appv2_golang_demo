@@ -184,18 +184,18 @@ func handleSettingPageEntries(c *gin.Context) {
 			{
 				Title: func() string {
 					if requestBody.Language == "zh" {
-						return "自定义页面1"
+						return "客户端API demo"
 					}
-					return "Custom Page 1"
+					return "WebSDK demo"
 				}(),
 				PageUrl: "/static/page1.html",
 			},
 			{
 				Title: func() string {
 					if requestBody.Language == "zh" {
-						return "自定义页面2"
+						return "组织信息demo"
 					}
-					return "Custom Page 2"
+					return "Org info demo"
 				}(),
 				PageUrl: "/static/page2.html",
 			},
