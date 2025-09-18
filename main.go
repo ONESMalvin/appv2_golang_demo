@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -13,8 +12,6 @@ var (
 )
 
 func main() {
-	isDev := flag.String("isDev", "false", "是否是开发环境")
-	flag.Parse()
 	// 初始化数据库
 	if err := InitDatabase(); err != nil {
 		log.Fatal("数据库初始化失败:", err)
@@ -25,15 +22,9 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", handleManifest)
-	r.Use(CORSMiddleware())
-	if *isDev == "false" {
-		r.Static("/static", "./web/dist")
-	} else {
-		r.GET("/static/*filepath", func(c *gin.Context) {
-			c.Redirect(302, "http://localhost:8081/static"+c.Param("filepath"))
-		})
-	}
+	r.Static("/static", "./web/dist")
 
+	r.Use(CORSMiddleware())
 	r.GET("/manifest", handleManifest)
 	r.POST("/install_cb", handleInstallCB)
 	r.GET("/all_installations", handleAllInstallations)

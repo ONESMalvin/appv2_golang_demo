@@ -1,5 +1,6 @@
 .vscode
 web/node_modules
 web/dist
+web/.next
 appv2go
 appv2.db

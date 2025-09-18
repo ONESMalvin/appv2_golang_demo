@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,6 +11,13 @@ import (
 // JWTAuthMiddleware JWT认证中间件
 func JWTAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// 静态资源直接放行
+		path := c.Request.URL.Path
+		if strings.HasPrefix(path, "/static") || path == "/" || path == "/manifest" {
+			c.Next()
+			return
+		}
+
 		// 获取Authorization header
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
