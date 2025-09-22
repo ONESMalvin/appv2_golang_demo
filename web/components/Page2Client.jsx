@@ -152,12 +152,12 @@ const Page2Client = () => {
           />
         </Card>
 
-        <Card style={{ marginBottom: '24px' }}>
+        <Card style={{ width: '100%', marginBottom: '24px' }}>
           <Title level={4} style={{ marginBottom: '16px' }}>
             选择团队
           </Title>
           <Select
-            style={{ width: '300px' }}
+            style={{ width: '100%' }}
             placeholder="请选择团队"
             options={teams.map((team) => ({
               label: team.name,
